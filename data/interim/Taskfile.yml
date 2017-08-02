@@ -1,0 +1,29 @@
+raw-to-long:
+  desc: "Convert experimental data from /data/raw to long-format .csv files"
+  dir: "subjects_long"
+  cmds:
+    - Rscript -e 'knitr::knit("make_subjects_long.rmd")'
+
+remove-rej-trials:
+  desc: "Remove rejected trials from long-form data, based on data in data/external/Behavioural_data.csv"
+  dir: "remove_rejected_trials"
+  cmds:
+    - Rscript -e 'knitr::knit("remove_rejected_trials.rmd")'
+
+scale-and-epoch:
+  desc: "Scale and epoch data from data/interim/remove_rejected_trials"
+  dir: "scaled_and_epoched"
+  cmds:
+    - Rscript -e 'knitr::knit("scale_and_epoch.Rmd")'
+
+baseline-correct:
+  desc: "Baseline correct data from data/interim/scaled_and_epoched for modelling"
+  dir: "baseline_corrected"
+  cmds:
+    - Rscript -e 'knitr::knit("baseline_corrector.rmd")'
+
+export-for-models:
+  desc: "Wrangle data from data/interim/baseline_corrected for format required by various models"
+  dir: "export_for_models"
+  cmds:
+    - Rscript -e 'knitr::knit("exporter.Rmd")'
